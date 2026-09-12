@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MR LOCKY | Cyber Portfolio</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#020305;
+    color:#e9faff;
+    font-family:'Share Tech Mono',monospace;
+    overflow-x:hidden;
+}
+
+/* =========================
+   LOADING SCREEN
+========================= */
+
+#loader{
+    position:fixed;
+    inset:0;
+    background:#020305;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:99999;
+    transition:1s ease;
+}
+
+.loader-logo{
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(35px,8vw,85px);
+    font-weight:900;
+    letter-spacing:8px;
+    color:#fff;
+    text-shadow:
+        0 0 5px #00f7ff,
+        0 0 15px #00f7ff,
+        0 0 35px #00f7ff,
+        0 0 70px #0066ff;
+    animation:loaderPulse 1.2s infinite alternate;
+}
+
+.loader-text{
+    margin-top:25px;
+    color:#00f7ff;
+    font-size:14px;
+    letter-spacing:4px;
+}
+
+.loading-bar{
+    width:min(350px,75vw);
+    height:3px;
+    margin-top:25px;
+    background:#111;
+    overflow:hidden;
+    box-shadow:0 0 15px #00f7ff;
+}
+
+.loading-progress{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#00f7ff,#7a00ff,#ff0055);
+    animation:loading 3s forwards;
+}
+
+@keyframes loading{
+    to{width:100%}
+}
+
+@keyframes loaderPulse{
+    from{opacity:.6}
+    to{opacity:1}
+}
+
+body.loaded #loader{
+    opacity:0;
+    visibility:hidden;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:999;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0px,
+            transparent 3px,
+            rgba(0,255,255,.025) 4px
+        );
+}
+
+.grid{
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    background-image:
+        linear-gradient(rgba(0,255,255,.04) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,255,255,.04) 1px,transparent 1px);
+    background-size:50px 50px;
+    transform:perspective(500px) rotateX(55deg) scale(2);
+    transform-origin:center bottom;
+    opacity:.25;
+}
+
+.neon-orb{
+    position:fixed;
+    width:350px;
+    height:350px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(0,247,255,.12),transparent 70%);
+    filter:blur(15px);
+    pointer-events:none;
+    z-index:-1;
+    animation:orbMove 10s infinite alternate ease-in-out;
+}
+
+@keyframes orbMove{
+    0%{transform:translate(-100px,-50px)}
+    100%{transform:translate(70vw,50vh)}
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    padding:20px 6%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    z-index:5000;
+    background:rgba(2,3,5,.7);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid rgba(0,247,255,.15);
+}
+
+.nav-logo{
+    font-family:'Orbitron';
+    font-weight:900;
+    letter-spacing:2px;
+    color:#00f7ff;
+    text-shadow:0 0 15px #00f7ff;
+}
+
+.nav-status{
+    font-size:11px;
+    color:#00ff88;
+}
+
+.status-dot{
+    display:inline-block;
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#00ff88;
+    box-shadow:0 0 12px #00ff88;
+    margin-right:6px;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+section{
+    min-height:100vh;
+    padding:120px 8% 80px;
+    display:none;
+    align-items:center;
+}
+
+section.active{
+    display:flex;
+    animation:pageIn .7s ease;
+}
+
+@keyframes pageIn{
+    from{
+        opacity:0;
+        transform:translateY(25px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.container{
+    width:100%;
+    max-width:1200px;
+    margin:auto;
+}
+
+/* =========================
+   HOME
+========================= */
+
+.home-content{
+    text-align:center;
+}
+
+.small-tag{
+    color:#00f7ff;
+    letter-spacing:5px;
+    font-size:13px;
+    margin-bottom:25px;
+}
+
+.main-name{
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(42px,9vw,110px);
+    font-weight:900;
+    letter-spacing:8px;
+    white-space:nowrap;
+    color:#fff;
+    text-shadow:
+        0 0 8px #00f7ff,
+        0 0 25px #00f7ff,
+        0 0 55px #006eff;
+    position:relative;
+    display:inline-block;
+}
+
+.main-name::before,
+.main-name::after{
+    content:"MR LOCKY";
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    overflow:hidden;
+    opacity:.7;
+}
+
+.main-name::before{
+    color:#ff0055;
+    transform:translate(3px,-2px);
+    clip-path:polygon(0 0,100% 0,100% 35%,0 35%);
+    animation:glitch1 2.5s infinite;
+}
+
+.main-name::after{
+    color:#00ffff;
+    transform:translate(-3px,2px);
+    clip-path:polygon(0 65%,100% 65%,100% 100%,0 100%);
+    animation:glitch2 2.2s infinite;
+}
+
+@keyframes glitch1{
+    0%,90%,100%{opacity:0}
+    92%{opacity:.8}
+    94%{opacity:0}
+    96%{opacity:.7}
+}
+
+@keyframes glitch2{
+    0%,87%,100%{opacity:0}
+    89%{opacity:.8}
+    91%{opacity:0}
+    94%{opacity:.7}
+}
+
+.subtitle{
+    margin-top:25px;
+    color:#9cecff;
+    font-size:clamp(14px,2vw,20px);
+}
+
+.typing{
+    color:#00ff88;
+}
+
+.hero-quote{
+    max-width:700px;
+    margin:35px auto;
+    color:#8297a4;
+    line-height:1.8;
+}
+
+.hero-buttons{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:18px;
+    margin-top:35px;
+}
+
+/* =========================
+   ANIMATED BORDER BUTTON
+   TWO GRADIENT LINES
+========================= */
+
+.neon-btn{
+    position:relative;
+    min-width:160px;
+    padding:15px 25px;
+    background:rgba(0,10,15,.75);
+    border:1px solid rgba(255,255,255,.12);
+    color:#fff;
+    text-decoration:none;
+    text-transform:uppercase;
+    font-family:'Share Tech Mono';
+    letter-spacing:2px;
+    cursor:pointer;
+    overflow:hidden;
+    transition:.3s;
+}
+
+.neon-btn span{
+    position:relative;
+    z-index:3;
+}
+
+.neon-btn::before,
+.neon-btn::after{
+    content:"";
+    position:absolute;
+    left:-120%;
+    width:100%;
+    height:2px;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        #00f7ff,
+        #8b00ff,
+        #ff0055,
+        transparent
+    );
+    animation:borderMove 2s linear infinite;
+}
+
+.neon-btn::before{
+    top:0;
+}
+
+.neon-btn::after{
+    bottom:0;
+    animation-delay:1s;
+}
+
+@keyframes borderMove{
+    0%{left:-120%}
+    100%{left:120%}
+}
+
+.neon-btn:hover{
+    transform:translateY(-4px);
+    background:rgba(0,247,255,.08);
+    box-shadow:
+        0 0 10px rgba(0,247,255,.4),
+        0 0 30px rgba(0,247,255,.15);
+}
+
+/* =========================
+   SECTION TITLE
+========================= */
+
+.section-title{
+    font-family:'Orbitron';
+    font-size:clamp(30px,6vw,60px);
+    margin-bottom:50px;
+    color:#fff;
+    text-shadow:0 0 20px #00f7ff;
+}
+
+.section-title span{
+    color:#00f7ff;
+}
+
+/* =========================
+   ABOUT
+========================= */
+
+.about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:35px;
+}
+
+.cyber-card{
+    position:relative;
+    background:rgba(4,10,15,.8);
+    border:1px solid rgba(0,247,255,.18);
+    padding:35px;
+    overflow:hidden;
+}
+
+.cyber-card::before{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:1px;
+    left:-100%;
+    top:0;
+    background:linear-gradient(90deg,transparent,#00f7ff,transparent);
+    animation:cardScan 3s infinite;
+}
+
+@keyframes cardScan{
+    0%{left:-100%}
+    100%{left:100%}
+}
+
+.card-title{
+    color:#00f7ff;
+    margin-bottom:20px;
+    font-size:18px;
+}
+
+.cyber-card p{
+    color:#8da1ad;
+    line-height:1.9;
+}
+
+.quote{
+    margin-top:25px;
+    padding-left:20px;
+    border-left:2px solid #ff0055;
+    color:#d7e7ec;
+    font-style:italic;
+}
+
+/* =========================
+   SKILLS
+========================= */
+
+.skills-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.skill{
+    padding:25px;
+    border:1px solid rgba(0,247,255,.15);
+    background:#05090d;
+    transition:.3s;
+}
+
+.skill:hover{
+    border-color:#00f7ff;
+    box-shadow:0 0 25px rgba(0,247,255,.15);
+    transform:translateY(-5px);
+}
+
+.skill h3{
+    color:#00f7ff;
+    margin-bottom:10px;
+}
+
+.skill p{
+    color:#70818c;
+    font-size:13px;
+    line-height:1.7;
+}
+
+/* =========================
+   PROJECTS
+========================= */
+
+.projects{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:25px;
+}
+
+.project{
+    padding:30px;
+    background:rgba(5,8,12,.9);
+    border:1px solid #152832;
+}
+
+.project-number{
+    color:#ff0055;
+    font-size:13px;
+}
+
+.project h3{
+    color:#fff;
+    margin:15px 0;
+    font-family:'Orbitron';
+}
+
+.project p{
+    color:#758b96;
+    line-height:1.8;
+}
+
+/* =========================
+   TERMINAL
+========================= */
+
+.terminal{
+    margin-top:35px;
+    background:#010507;
+    border:1px solid rgba(0,247,255,.3);
+    box-shadow:0 0 25px rgba(0,247,255,.08);
+}
+
+.terminal-head{
+    padding:10px 15px;
+    border-bottom:1px solid #152832;
+    color:#526873;
+}
+
+.terminal-body{
+    padding:20px;
+    min-height:180px;
+    color:#00ff88;
+    line-height:1.8;
+}
+
+.cursor{
+    animation:blink 1s infinite;
+}
+
+@keyframes blink{
+    50%{opacity:0}
+}
+
+/* =========================
+   CONTACT
+========================= */
+
+.contact-box{
+    max-width:800px;
+    margin:auto;
+}
+
+.contact-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:22px;
+    margin-bottom:15px;
+    background:#05090d;
+    border-left:2px solid #00f7ff;
+}
+
+.contact-label{
+    color:#617680;
+}
+
+.contact-value{
+    color:#e8fbff;
+    word-break:break-all;
+}
+
+.contact-buttons{
+    margin-top:35px;
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    text-align:center;
+    padding:25px;
+    color:#42545d;
+    font-size:11px;
+    border-top:1px solid rgba(0,247,255,.1);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:800px){
+
+    .about-grid,
+    .projects{
+        grid-template-columns:1fr;
+    }
+
+    .skills-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .main-name{
+        font-size:10vw;
+        letter-spacing:3px;
+    }
+
+    nav{
+        padding:17px 5%;
+    }
+}
+
+@media(max-width:500px){
+
+    .skills-grid{
+        grid-template-columns:1fr;
+    }
+
+    section{
+        padding-left:5%;
+        padding-right:5%;
+    }
+
+    .contact-item{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:8px;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .neon-btn{
+        width:90%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOADING SCREEN -->
+<div id="loader">
+
+    <div class="loader-logo">MR LOCKY</div>
+
+    <div class="loader-text">
+        INITIALIZING CYBER SYSTEM...
+    </div>
+
+    <div class="loading-bar">
+        <div class="loading-progress"></div>
+    </div>
+
+</div>
+
+<div class="grid"></div>
+<div class="neon-orb"></div>
+
+<!-- NAVBAR -->
+<nav>
+
+    <div class="nav-logo">
+        LOCKY.SYS
+    </div>
+
+    <div class="nav-status">
+        <span class="status-dot"></span>
+        SYSTEM ONLINE
+    </div>
+
+</nav>
+
+
+<!-- =========================
+     HOME
+========================= -->
+
+<section id="home" class="active">
+
+<div class="container home-content">
+
+    <div class="small-tag">
+        // IDENTITY VERIFIED
+    </div>
+
+    <div class="main-name">
+        MR LOCKY
+    </div>
+
+    <div class="subtitle">
+        KANNAN PRASAD
+        <br>
+        <span class="typing" id="typing"></span>
+    </div>
+
+    <p class="hero-quote">
+        "I don't follow the system.
+        I understand it, break its limits,
+        and rebuild it better."
+    </p>
+
+    <div class="hero-buttons">
+
+        <button class="neon-btn" onclick="showPage('about')">
+            <span>ABOUT ME</span>
+        </button>
+
+        <button class="neon-btn" onclick="showPage('skills')">
+            <span>SKILLS</span>
+        </button>
+
+        <button class="neon-btn" onclick="showPage('projects')">
+            <span>PROJECTS</span>
+        </button>
+
+        <button class="neon-btn" onclick="showPage('contact')">
+            <span>CONTACT</span>
+        </button>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     ABOUT
+========================= -->
+
+<section id="about">
+
+<div class="container">
+
+    <h2 class="section-title">
+        ABOUT <span>ME</span>
+    </h2>
+
+    <div class="about-grid">
+
+        <div class="cyber-card">
+
+            <div class="card-title">
+                [ IDENTITY ]
+            </div>
+
+            <p>
+                Name: Kannan Prasad
+                <br><br>
+                Alias: MR LOCKY
+                <br><br>
+                Role: Black Hat / Cyber Persona
+                <br><br>
+                Status: Always Learning
+            </p>
+
+            <div class="quote">
+                "Knowledge is the real access key."
+            </div>
+
+        </div>
+
+
+        <div class="cyber-card">
+
+            <div class="card-title">
+                [ MINDSET ]
+            </div>
+
+            <p>
+                Curious by nature. Creative by choice.
+                Obsessed with technology, digital design,
+                editing, programming and the hidden side
+                of the digital world.
+            </p>
+
+            <div class="quote">
+                "The strongest firewall is a mind that
+                never stops learning."
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="terminal">
+
+        <div class="terminal-head">
+            TERMINAL // LOCKY_PROFILE
+        </div>
+
+        <div class="terminal-body">
+
+            > loading identity...<br>
+            > user: KANNAN PRASAD<br>
+            > alias: MR LOCKY<br>
+            > mode: CYBER_PERSONA<br>
+            > creativity: 100%<br>
+            > curiosity: ∞<br>
+            > status: <span style="color:#00ff88">ONLINE</span>
+            <span class="cursor">█</span>
+
+        </div>
+
+    </div>
+
+    <br><br>
+
+    <button class="neon-btn" onclick="showPage('home')">
+        <span>← BACK</span>
+    </button>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     SKILLS
+========================= -->
+
+<section id="skills">
+
+<div class="container">
+
+    <h2 class="section-title">
+        MY <span>SKILLS</span>
+    </h2>
+
+    <div class="skills-grid">
+
+        <div class="skill">
+            <h3>01 // PROGRAMMING</h3>
+            <p>
+                Building digital experiences,
+                experimenting with code and
+                learning modern technologies.
+            </p>
+        </div>
+
+        <div class="skill">
+            <h3>02 // CYBER</h3>
+            <p>
+                Cybersecurity concepts,
+                digital systems and security
+                research mindset.
+            </p>
+        </div>
+
+        <div class="skill">
+            <h3>03 // VIDEO EDITING</h3>
+            <p>
+                VFX, transitions, motion effects,
+                cinematic edits and social-media
+                content creation.
+            </p>
+        </div>
+
+        <div class="skill">
+            <h3>04 // UI DESIGN</h3>
+            <p>
+                Neon interfaces, cyberpunk layouts,
+                futuristic dashboards and
+                interactive experiences.
+            </p>
+        </div>
+
+        <div class="skill">
+            <h3>05 // CREATIVE</h3>
+            <p>
+                Turning simple concepts into
+                visually powerful digital
+                experiences.
+            </p>
+        </div>
+
+        <div class="skill">
+            <h3>06 // LEARNING</h3>
+            <p>
+                Always exploring new tools,
+                technologies and techniques.
+                Never finished learning.
+            </p>
+        </div>
+
+    </div>
+
+    <br><br>
+
+    <div class="quote">
+        "Stay curious. Stay unpredictable. Stay ahead."
+    </div>
+
+    <br><br>
+
+    <button class="neon-btn" onclick="showPage('home')">
+        <span>← BACK</span>
+    </button>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     PROJECTS
+========================= -->
+
+<section id="projects">
+
+<div class="container">
+
+    <h2 class="section-title">
+        SELECTED <span>PROJECTS</span>
+    </h2>
+
+    <div class="projects">
+
+        <div class="project">
+
+            <div class="project-number">
+                PROJECT_001
+            </div>
+
+            <h3>CYBER INTERFACE</h3>
+
+            <p>
+                Futuristic hacker-style interface
+                featuring animated neon elements,
+                terminal aesthetics and interactive
+                navigation.
+            </p>
+
+        </div>
+
+
+        <div class="project">
+
+            <div class="project-number">
+                PROJECT_002
+            </div>
+
+            <h3>VFX LAB</h3>
+
+            <p>
+                Experimental video editing,
+                transitions, visual effects and
+                cinematic motion design.
+            </p>
+
+        </div>
+
+
+        <div class="project">
+
+            <div class="project-number">
+                PROJECT_003
+            </div>
+
+            <h3>LOCKY WEB</h3>
+
+            <p>
+                Custom HTML, CSS and JavaScript
+                experiences built around a futuristic
+                cyberpunk identity.
+            </p>
+
+        </div>
+
+
+        <div class="project">
+
+            <div class="project-number">
+                PROJECT_004
+            </div>
+
+            <h3>DIGITAL EXPERIMENTS</h3>
+
+            <p>
+                A collection of creative experiments,
+                UI concepts, animations and
+                technology-driven ideas.
+            </p>
+
+        </div>
+
+    </div>
+
+    <br><br>
+
+    <div class="quote">
+        "Every project is another layer of the system."
+    </div>
+
+    <br><br>
+
+    <button class="neon-btn" onclick="showPage('home')">
+        <span>← BACK</span>
+    </button>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     CONTACT
+========================= -->
+
+<section id="contact">
+
+<div class="container contact-box">
+
+    <h2 class="section-title">
+        CONTACT <span>LOCKY</span>
+    </h2>
+
+    <div class="contact-item">
+
+        <div class="contact-label">
+            GMAIL
+        </div>
+
+        <div class="contact-value">
+            kannanprasad2261@gmail.com
+        </div>
+
+    </div>
+
+
+    <div class="contact-item">
+
+        <div class="contact-label">
+            GITHUB
+        </div>
+
+        <div class="contact-value">
+            Kannanprasad
+        </div>
+
+    </div>
+
+
+    <div class="contact-item">
+
+        <div class="contact-label">
+            WHATSAPP
+        </div>
+
+        <div class="contact-value">
+            +91 75589 09112
+        </div>
+
+    </div>
+
+
+    <div class="contact-buttons">
+
+        <a
+        class="neon-btn"
+        href="mailto:kannanprasad2261@gmail.com">
+            <span>EMAIL</span>
+        </a>
+
+
+        <a
+        class="neon-btn"
+        href="https://github.com/Kannanprasad"
+        target="_blank">
+            <span>GITHUB</span>
+        </a>
+
+
+        <a
+        class="neon-btn"
+        href="https://wa.me/917558909112"
+        target="_blank">
+            <span>WHATSAPP</span>
+        </a>
+
+    </div>
+
+
+    <div class="terminal">
+
+        <div class="terminal-head">
+            CONNECTION // LOCKY
+        </div>
+
+        <div class="terminal-body">
+
+            > establishing connection...<br>
+            > channel: SECURE<br>
+            > encryption: ENABLED<br>
+            > user: MR LOCKY<br>
+            > waiting for incoming signal...
+            <span class="cursor">█</span>
+
+        </div>
+
+    </div>
+
+    <br><br>
+
+    <button class="neon-btn" onclick="showPage('home')">
+        <span>← HOME</span>
+    </button>
+
+</div>
+
+</section>
+
+
+<footer>
+
+    © 2026 MR LOCKY // KANNAN PRASAD
+    <br><br>
+    "Code the future. Design the unknown."
+
+</footer>
+
+
+<script>
+
+/* =========================
+   LOADER
+========================= */
+
+window.addEventListener("load", () => {
+
+    setTimeout(() => {
+        document.body.classList.add("loaded");
+    }, 3200);
+
+});
+
+
+/* =========================
+   PAGE NAVIGATION
+========================= */
+
+function showPage(page){
+
+    document.querySelectorAll("section").forEach(section => {
+        section.classList.remove("active");
+    });
+
+    const target = document.getElementById(page);
+
+    if(target){
+        target.classList.add("active");
+        window.scrollTo({
+            top:0,
+            behavior:"smooth"
+        });
+    }
+
+}
+
+
+/* =========================
+   TYPING EFFECT
+========================= */
+
+const words = [
+    "CYBER ENTHUSIAST",
+    "DIGITAL CREATOR",
+    "VIDEO EDITOR",
+    "PROGRAMMER",
+    "UI EXPERIMENTER",
+    "THE ONE BEHIND LOCKY"
+];
+
+let wordIndex = 0;
+let charIndex = 0;
+let deleting = false;
+
+const typing = document.getElementById("typing");
+
+function typeEffect(){
+
+    const current = words[wordIndex];
+
+    if(!deleting){
+
+        typing.textContent = current.substring(
+            0,
+            charIndex++
+        );
+
+        if(charIndex > current.length){
+
+            deleting = true;
+
+            setTimeout(typeEffect,1200);
+
+            return;
+        }
+
+    }else{
+
+        typing.textContent = current.substring(
+            0,
+            charIndex--
+        );
+
+        if(charIndex < 0){
+
+            deleting = false;
+            charIndex = 0;
+
+            wordIndex++;
+
+            if(wordIndex >= words.length){
+                wordIndex = 0;
+            }
+
+        }
+
+    }
+
+    setTimeout(
+        typeEffect,
+        deleting ? 45 : 85
+    );
+
+}
+
+typeEffect();
+
+
+/* =========================
+   RANDOM CYBER GLITCH
+========================= */
+
+setInterval(() => {
+
+    const logo = document.querySelector(".main-name");
+
+    if(Math.random() > .75){
+
+        logo.style.transform =
+            `translate(${Math.random()*4-2}px,
+             ${Math.random()*4-2}px)`;
+
+        setTimeout(() => {
+            logo.style.transform = "";
+        },100);
+
+    }
+
+},1000);
+
+
+/* =========================
+   KEYBOARD NAVIGATION
+========================= */
+
+document.addEventListener("keydown",(e)=>{
+
+    if(e.key === "1") showPage("home");
+    if(e.key === "2") showPage("about");
+    if(e.key === "3") showPage("skills");
+    if(e.key === "4") showPage("projects");
+    if(e.key === "5") showPage("contact");
+
+});
+
+</script>
+
+</body>
+  </html>
